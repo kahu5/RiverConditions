@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery.parseXML demo</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+
+<script>
+    $.get( "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=kimo1&output=xml", function( data ) {
+    var xml = new XMLSerializer().serializeToString(data);
+    var xmlDoc = $.parseXML( xml );
+    var xml = $( xmlDoc );
+    var users = xml.find( "datum" );
+
+    for(var i = 0; i < users.length; i++) {
+        var user = users[i];
+        var names = user.getElementsByTagName("primary");
+        for(var j = 0; j < names.length; j++) {
+            console.log(names[j].getAttribute("name"));
+        }
+    }
+});
+
+</body>
+</html>
